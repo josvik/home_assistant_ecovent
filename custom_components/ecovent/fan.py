@@ -25,6 +25,7 @@ ATTR_AIRFLOW_HEATREC = "heat_recovery"
 ATTR_AIRFLOW_AIRSUPP = "air_supply"
 ATTR_FAN_AIRFLOW = "airflow"
 ATTR_FAN_AIRFLOW_LIST = "airflow_list"
+ATTR_FAN_HUMIDITY = "humidity"
 
 ECOVENT_FAN_DEVICES = 'ecovent_fan_devices'
 
@@ -92,6 +93,7 @@ class EcoventFan(FanEntity):
         self._fan_state = self._fan.state
         self._fan_speed = self._fan.speed
         self._fan_airflow = self._fan.airflow
+        self._fan_humidity = self._fan.humidity
 
     @property
     def name(self):
@@ -137,12 +139,14 @@ class EcoventFan(FanEntity):
         return {
             ATTR_FAN_AIRFLOW: self._fan_airflow,
             ATTR_FAN_AIRFLOW_LIST: AIRFLOW_MODES,
+            ATTR_FAN_HUMIDITY: self._fan_humidity,
         }
 
     async def async_update(self) -> None:
         """ Get latest data from fan."""
         self._fan.update()
         self._fan_airflow = self._fan.airflow
+        self._fan_humidity = self._fan.humidity
 
     async def async_set_percentage(self, percentage: int) -> None:
         """Set the speed of the fan, as a percentage."""
