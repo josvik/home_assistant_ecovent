@@ -2,7 +2,7 @@ import logging
 import math
 
 from homeassistant.components.fan import (
-    SUPPORT_SET_SPEED,
+    FanEntityFeature,
     FanEntity,
     DOMAIN
     )
@@ -122,7 +122,7 @@ class EcoventFan(FanEntity):
     @property
     def supported_features(self):
         """Return supported features."""
-        return SUPPORT_SET_SPEED
+        return FanEntityFeature.SET_SPEED
 
     @property
     def is_on(self):
